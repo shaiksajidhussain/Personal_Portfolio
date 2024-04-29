@@ -41,7 +41,7 @@ export const skills = [
       },
       {
         name: 'Tailwind Css',
-        image: 'data:image/png;base64,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',
+        image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Tailwind_CSS_Logo.svg/2560px-Tailwind_CSS_Logo.svg.png',
       },
 
     ],
@@ -52,6 +52,10 @@ export const skills = [
 
 
 
+      {
+        name: 'Express',
+        image: 'data:image/png;base64,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',
+      },
       {
         name: 'Python',
         image: 'https://developers.redhat.com/sites/default/files/styles/article_feature/public/Python-01%20%282%29.png?itok=TEVIQBQo',
@@ -122,6 +126,15 @@ export const skills = [
 export const experiences = [
   {
     id: 0,
+    img: 'https://res.cloudinary.com/defsu5bfc/image/upload/v1714398402/Frame_115_tighuj.jpg',
+    
+    role: 'MERN STACK Developer',
+    company: 'QubicGen',
+    desc: 'As a MERN stack developer at QubicGen, I spearheaded the creation of our company website. Leveraging React.js for the frontend and Express.js with MongoDB for the backend, I crafted a dynamic and engaging platform. Utilizing tools like Figma for design and frameworks such as Tailwind CSS and Bootstrap, I ensured a sleek and modern user experience. Additionally, I integrated various libraries like AOS to enhance the websites functionality and aesthetics. Working collaboratively within the team, we delivered a cutting-edge website that embodies QubicGens vision and professionalism.',
+    skills: ['JavaScript', 'React', 'Rest API', 'HTML', 'CSS', 'JavaScript', 'Express Js', 'MongoDB', 'Mongoose'],
+  },
+  {
+    id: 0,
     img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzD0vtHZ73JD0HrMMzmgUf6SCeUZp1hLLibQ&usqp=CAU',
     role: 'Java FullStack Developer',
     company: 'Marolix Technology Solutions Pvt Ltd',
@@ -178,6 +191,25 @@ export const education = [
 ]
 
 export const projects = [
+  {
+    id: 0,
+    title: 'QubicGen',
+    description: "QubicGen - QubicGen is a service based company that offers a wide range of services like RPA , Web Development , SAP , CyberSecurity. I have Built there website by using React Js , Express Js , MongoDB , Tailwind, Figma  .",
+    image: 'https://res.cloudinary.com/defsu5bfc/image/upload/v1714398402/Frame_115_tighuj.jpg',
+    tags: ['Html', 'Css', ,'Tailwind CSS', 'Javascript', 'React Js', 'Express Js' , 'MongoDB', 'Libraries'],
+    category: 'web app',
+    github: 'https://github.com/shaiksajidhussain',
+    webapp: 'https://www.qubicgen.com/',
+    member: [
+      {
+        name: 'Sajid Hussain',
+        img: 'https://avatars.githubusercontent.com/u/93574244?v=4',
+        linkedin: 'https://www.linkedin.com/in/shaiksajidhussain/',
+        github: 'https://github.com/shaiksajidhussain/'
+      },
+
+    ]
+  },
   {
     id: 0,
     title: 'Coursyy',

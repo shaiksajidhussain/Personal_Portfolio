@@ -1,5 +1,5 @@
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import Timeline from '@mui/lab/Timeline';
 import TimelineItem from '@mui/lab/TimelineItem';
@@ -9,6 +9,8 @@ import TimelineContent from '@mui/lab/TimelineContent';
 import TimelineDot from '@mui/lab/TimelineDot';
 import ExperienceCard from '../Cards/ExperienceCard';
 import { experiences } from '../../data/constants';
+import AOS from 'aos';
+
 
 const Container = styled.div`
     display: flex;
@@ -74,8 +76,16 @@ const TimelineSection = styled.div`
 
 
 
-const index = () => {
+const Index = () => {
+
+    useEffect(() => {
+        AOS.init();
+    }, []);
+    
     return (
+
+        <div data-aos="zoom-in-up">
+
         <Container id="experience">
             <Wrapper>
                 <Title>Experience</Title>
@@ -100,7 +110,8 @@ const index = () => {
                 </TimelineSection>
             </Wrapper>
         </Container>
+        </div>
     )
 }
 
-export default index
+export default Index

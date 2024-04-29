@@ -1,13 +1,20 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import HeroBgAnimation from '../HeroBgAnimation'
 import { HeroContainer, HeroBg, HeroLeftContainer, Img, HeroRightContainer, HeroInnerContainer, TextLoop, Title, Span, SubTitle,SocialMediaIcons,SocialMediaIcon, ResumeButton } from './HeroStyle'
 import HeroImg from '../../images/sanju1.jpg'
 import Typewriter from 'typewriter-effect';
 import { Bio } from '../../data/constants';
+import AOS from 'aos';
 
 const HeroSection = () => {
+
+    useEffect(() => {
+        AOS.init();
+    }, []);
     return (
-        <div id="about">
+        
+        <div id="about" data-aos="zoom-in-up">
+        
             <HeroContainer>
                 <HeroBg>
                     <HeroBgAnimation />
