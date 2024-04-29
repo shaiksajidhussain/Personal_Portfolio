@@ -5,17 +5,17 @@ import HeroImg from '../../images/sanju1.jpg'
 import Typewriter from 'typewriter-effect';
 import { Bio } from '../../data/constants';
 import AOS from 'aos';
+import 'aos/dist/aos.css'; // Import CSS file
 
 const HeroSection = () => {
-
-    useEffect(() => {
+    React.useEffect(() => {
         AOS.init();
-    }, []);
+      }, []);
+      
     return (
         
-        <div id="about" data-aos="zoom-in-up">
         
-            <HeroContainer>
+            <HeroContainer data-aos="zoom-in-right" data-aos-duration="1500">
                 <HeroBg>
                     <HeroBgAnimation />
                 </HeroBg>
@@ -45,7 +45,6 @@ const HeroSection = () => {
                 </HeroInnerContainer>
 
             </HeroContainer>
-        </div>
     )
 }
 

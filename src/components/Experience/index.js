@@ -84,7 +84,7 @@ const Index = () => {
     
     return (
 
-        <div data-aos="zoom-in-up">
+        <div data-aos="fade-left" data-aos-duration="1500">
 
         <Container id="experience">
             <Wrapper>

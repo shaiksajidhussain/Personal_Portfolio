@@ -3,6 +3,7 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import InstagramIcon from '@mui/icons-material/Instagram';
+import YoutubeIcon from '@mui/icons-material/YouTube';
 
 import { Bio } from '../../data/constants';
 
@@ -102,9 +103,8 @@ function Footer() {
           <SocialMediaIcon href={Bio.twitter} target="display"><TwitterIcon /></SocialMediaIcon>
           <SocialMediaIcon href={Bio.linkedin} target="display"><LinkedInIcon /></SocialMediaIcon>
           <SocialMediaIcon href={Bio.insta} target="display"><InstagramIcon /></SocialMediaIcon>
-          <a href="https://www.youtube.com/@codewithsanjuu" target="_blank" rel="noopener noreferrer">
-  <img src="https://static-00.iconduck.com/assets.00/youtube-icon-2048x2048-879wd8sv.png" style={{ width: '30px', height: '30px' }} alt="YouTube Icon" />
-</a>        </SocialMediaIcons>
+          <SocialMediaIcon href={Bio.youtube} target="display"><YoutubeIcon /></SocialMediaIcon>
+          </SocialMediaIcons>
         <Copyright>
           &copy; 2023 Sajid Hussain. All rights reserved.
         </Copyright>

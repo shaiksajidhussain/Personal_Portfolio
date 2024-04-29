@@ -3,12 +3,18 @@ import { useState } from 'react'
 import { Container, Wrapper, Title, Desc, CardContainer, ToggleButtonGroup, ToggleButton, Divider } from './ProjectsStyle'
 import ProjectCard from '../Cards/ProjectCards'
 import { projects } from '../../data/constants'
+import AOS from 'aos';
+import 'aos/dist/aos.css'; // Import CSS file
 
 
 const Projects = ({openModal,setOpenModal}) => {
   const [toggle, setToggle] = useState('all');
+  React.useEffect(() => {
+    AOS.init();
+  }, []);
+  
   return (
-    <Container id="projects">
+    <Container id="projects" data-aos="zoom-in-right" data-aos-duration="1500" >
       <Wrapper>
         <Title>Projects</Title>
         <Desc>

@@ -9,6 +9,8 @@ import TimelineContent from '@mui/lab/TimelineContent';
 import TimelineDot from '@mui/lab/TimelineDot';
 import { education, experiences } from '../../data/constants';
 import EducationCard from '../Cards/EducationCard';
+import AOS from 'aos';
+import 'aos/dist/aos.css'; // Import CSS file
 
 const Container = styled.div`
     display: flex;
@@ -78,8 +80,9 @@ const TimelineSection = styled.div`
 
 
 const index = () => {
+ 
     return (
-        <Container id="education">
+        <Container id="education"  data-aos="flip-left" data-aos-duration="1500" >
             <Wrapper>
                 <Title>Education</Title>
                 <Desc>

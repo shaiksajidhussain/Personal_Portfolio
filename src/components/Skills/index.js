@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 import { skills } from '../../data/constants'
+import AOS from 'aos';
+import 'aos/dist/aos.css'; // Import CSS file
 
 const Container = styled.div`
 display: flex;
@@ -121,7 +123,7 @@ const SkillImage = styled.img`
 
 const Skills = () => {
   return (
-    <Container id="skills">
+    <Container id="skills" data-aos="zoom-in-right" data-aos-duration="1500">
       <Wrapper>
         <Title>Skills</Title>
         <Desc>Here are some of my skills on which I have been working on for the past 2 years.

@@ -2,7 +2,11 @@ import React from 'react'
 import styled from 'styled-components'
 import { useRef } from 'react';
 import emailjs from '@emailjs/browser';
+
 import { Snackbar } from '@mui/material';
+import AOS from 'aos';
+import 'aos/dist/aos.css'; // Import CSS file
+
 
 const Container = styled.div`
 display: flex;
@@ -128,25 +132,47 @@ const Contact = () => {
   const [open, setOpen] = React.useState(false);
   const form = useRef();
 
-  const handleSubmit = (e) => {
+  const sendEmail = (e) => {
     e.preventDefault();
-    emailjs.sendForm('service_tox7kqs', 'template_nv7k7mj', form.current, 'SybVGsYS52j2TfLbi')
-      .then((result) => {
-        setOpen(true);
-        form.current.reset();
-      }, (error) => {
-        console.log(error.text);
-      });
-  }
+
+    emailjs
+      .sendForm('service_m9m33cj', 'template_spp7619', form.current, {
+        publicKey: 'aWex7xBMzUz0geUmJ',
+      })
+      .then(
+        () => {
+          console.log('SUCCESS!');
+        },
+        (error) => {
+          console.log('FAILED...', error.text);
+        },
+      );
+  };
+  
+  
+  
+  React.useEffect(() => {
+    AOS.init();
+  }, []);
+  
+
 
 
 
   return (
-    <Container>
+<>
+<div id="contact">
+
+</div>
+
+
+    <div data-aos="zoom-in-up">
+
+<Container data-aos="zoom-in-left" data-aos-duration="1500"  >
       <Wrapper>
         <Title>Contact</Title>
         <Desc>Feel free to reach out to me for any questions or opportunities!</Desc>
-        <ContactForm ref={form} onSubmit={handleSubmit}>
+        <ContactForm ref={form} onSubmit={sendEmail}>
           <ContactTitle>Email Me 🚀</ContactTitle>
           <ContactInput placeholder="Your Email" name="from_email" />
           <ContactInput placeholder="Your Name" name="from_name" />
@@ -163,6 +189,8 @@ const Contact = () => {
         />
       </Wrapper>
     </Container>
+    </div>
+</>
   )
 }
 
