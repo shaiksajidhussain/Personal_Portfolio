@@ -145,40 +145,30 @@ const Skill = styled.div`
 
 
 const ExperienceCard = ({ experience }) => {
+    if (!experience) {
+        return null; // or return a placeholder/loading state
+    }
+
     return (
         <Card>
             <Top>
-                <Image src={experience.img} />
+                {experience.img && <Image src={experience.img} alt={experience.company} />}
                 <Body>
                     <Role>{experience.role}</Role>
                     <Company>{experience.company}</Company>
-                    <Date>{experience.date}</Date>
+                   
                 </Body>
             </Top>
             <Description>
-                {experience?.desc &&
-                    <Span>{experience?.desc}</Span>
-
-                }
-                {experience?.skills &&
-                    <>
-                        <br />
-                        <Skills>
-                            <b>Skills:</b>
-                            <ItemWrapper>
-                                {experience?.skills?.map((skill, index) => (
-                                    <Skill>• {skill}</Skill>
-                                ))}
-                            </ItemWrapper>
-                        </Skills>
-                    </>
-                }
+                {experience.desc}
             </Description>
-            {experience.doc &&
-                <a href={experience.doc} target="new">
-                    <Document src={experience.doc} />
-                </a>
-            }
+            <Skills>
+                <ItemWrapper>
+                    {experience.skills && experience.skills.map((skill, index) => (
+                        <Skill key={`skill-${index}`}>{skill}</Skill>
+                    ))}
+                </ItemWrapper>
+            </Skills>
         </Card>
     )
 }

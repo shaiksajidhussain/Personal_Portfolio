@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import { skills } from '../../data/constants'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import AOS from 'aos';
 import 'aos/dist/aos.css'; // Import CSS file
 
@@ -74,8 +76,6 @@ const Skill = styled.div`
     max-width: 330px;
     padding: 10px 36px;
   }
-
-
 `
 
 const SkillTitle = styled.h2`
@@ -105,6 +105,9 @@ const SkillItem = styled.div`
   align-items: center;
   justify-content: center;
   gap: 8px;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+
   @media (max-width: 768px) {
     font-size: 14px;
     padding: 8px 12px;
@@ -118,23 +121,117 @@ const SkillItem = styled.div`
 const SkillImage = styled.img`
   width: 24px;
   height: 24px;
+  transition: all 0.3s ease-in-out;
 `
 
-
 const Skills = () => {
+  const skillsRef = useRef(null)
+  const skillCardsRef = useRef([])
+  const skillItemsRef = useRef([])
+
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger)
+
+    const skillsSection = skillsRef.current
+    const skillCards = skillCardsRef.current
+    const skillItems = skillItemsRef.current
+
+    gsap.fromTo(skillsSection.querySelector('.skills-title'), 
+      { opacity: 0, y: 50 },
+      { opacity: 1, y: 0, duration: 1, scrollTrigger: {
+        trigger: skillsSection,
+        start: 'top 80%',
+      }}
+    )
+
+    gsap.fromTo(skillsSection.querySelector('.skills-desc'),
+      { opacity: 0, y: 30 },
+      { opacity: 1, y: 0, duration: 1, delay: 0.2, scrollTrigger: {
+        trigger: skillsSection,
+        start: 'top 80%',
+      }}
+    )
+
+    skillCards.forEach((card, index) => {
+      gsap.fromTo(card,
+        { opacity: 0, y: 50, rotationX: -10 },
+        { opacity: 1, y: 0, rotationX: 0, duration: 0.8, delay: 0.1 * index, scrollTrigger: {
+          trigger: card,
+          start: 'top 90%',
+        }}
+      )
+
+      gsap.fromTo(card.querySelectorAll('.skill-item'),
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.5, stagger: 0.1, delay: 0.2 + 0.1 * index, scrollTrigger: {
+          trigger: card,
+          start: 'top 90%',
+        }}
+      )
+    })
+
+    // Hover animations for skill items
+    skillItems.forEach((itemGroup) => {
+      if (itemGroup && itemGroup.length) {
+        itemGroup.forEach((item) => {
+          if (item) {
+            item.addEventListener('mouseenter', () => {
+              gsap.to(item, {
+                scale: 1.1,
+                boxShadow: '0 0 15px rgba(133, 76, 230, 0.5)',
+                duration: 0.3
+              })
+              const img = item.querySelector('img');
+              if (img) {
+                gsap.to(img, {
+                  rotate: 360,
+                  duration: 0.5
+                })
+              }
+            })
+
+            item.addEventListener('mouseleave', () => {
+              gsap.to(item, {
+                scale: 1,
+                boxShadow: 'none',
+                duration: 0.3
+              })
+              const img = item.querySelector('img');
+              if (img) {
+                gsap.to(img, {
+                  rotate: 0,
+                  duration: 0.5
+                })
+              }
+            })
+          }
+        })
+      }
+    })
+
+  }, [])
+
   return (
-    <Container id="skills" data-aos="zoom-in-right" data-aos-duration="1500">
+    <Container id="skills" ref={skillsRef}>
       <Wrapper>
-        <Title>Skills</Title>
-        <Desc>Here are some of my skills on which I have been working on for the past 2 years.
-        </Desc>
+        <Title className="skills-title">Skills</Title>
+        <Desc className="skills-desc">Heree are some of my skills on which I have been working on for the past 2 years.</Desc>
         <SkillsContainer>
-          {skills.map((skill) => (
-            <Skill>
+          {skills.map((skill, index) => (
+            <Skill key={index} ref={el => skillCardsRef.current[index] = el}>
               <SkillTitle>{skill.title}</SkillTitle>
               <SkillList>
-                {skill.skills.map((item) => (
-                  <SkillItem>
+                {skill.skills.map((item, itemIndex) => (
+                  <SkillItem 
+                    key={itemIndex} 
+                    className="skill-item"
+                    ref={el => {
+                      if (!skillItemsRef.current[index]) {
+                        skillItemsRef.current[index] = []
+                      }
+                      skillItemsRef.current[index][itemIndex] = el
+                    }}
+                  >
                     <SkillImage src={item.image}/>
                     {item.name}
                   </SkillItem>
@@ -142,7 +239,6 @@ const Skills = () => {
               </SkillList>
             </Skill>
           ))}
-
         </SkillsContainer>
       </Wrapper>
     </Container>

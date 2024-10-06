@@ -1,6 +1,5 @@
-
-import React, { useEffect } from 'react'
-import styled from 'styled-components'
+import React, { useEffect, useRef } from 'react'
+import styled, { useTheme } from 'styled-components'
 import Timeline from '@mui/lab/Timeline';
 import TimelineItem from '@mui/lab/TimelineItem';
 import TimelineSeparator from '@mui/lab/TimelineSeparator';
@@ -9,8 +8,8 @@ import TimelineContent from '@mui/lab/TimelineContent';
 import TimelineDot from '@mui/lab/TimelineDot';
 import ExperienceCard from '../Cards/ExperienceCard';
 import { experiences } from '../../data/constants';
-import AOS from 'aos';
-
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 const Container = styled.div`
     display: flex;
@@ -74,31 +73,72 @@ const TimelineSection = styled.div`
     gap: 12px;
 `;
 
+const StyledTimelineDot = styled(TimelineDot)`
+  background-color: ${({ theme }) => theme.primary};
+`;
 
+const StyledTimelineConnector = styled(TimelineConnector)`
+  background-color: ${({ theme }) => theme.primary};
+`;
 
 const Index = () => {
+    const theme = useTheme();
+    const containerRef = useRef(null);
 
     useEffect(() => {
-        AOS.init();
+        gsap.registerPlugin(ScrollTrigger);
+
+        const container = containerRef.current;
+        const title = container.querySelector('.experience-title');
+        const desc = container.querySelector('.experience-desc');
+        const items = container.querySelectorAll('.experience-item');
+
+        gsap.set([title, desc, ...items], { autoAlpha: 0, y: 50 });
+
+        ScrollTrigger.batch([title, desc], {
+            onEnter: (elements) => gsap.to(elements, {
+                autoAlpha: 1,
+                y: 0,
+                stagger: 0.2,
+                duration: 1,
+                ease: "power3.out",
+                overwrite: true
+            }),
+            start: "top 80%",
+        });
+
+        items.forEach((item, index) => {
+            gsap.to(item, {
+                scrollTrigger: {
+                    trigger: item,
+                    start: "top 80%",
+                    onEnter: () => gsap.to(item, {
+                        autoAlpha: 1,
+                        y: 0,
+                        duration: 0.8,
+                        ease: "power3.out",
+                        overwrite: true
+                    })
+                }
+            });
+        });
+
     }, []);
     
     return (
-
-        <div data-aos="fade-left" data-aos-duration="1500">
-
-        <Container id="experience">
+        <Container id="experience" ref={containerRef}>
             <Wrapper>
-                <Title>Experience</Title>
-                <Desc>
+                <Title className="experience-title">Experience</Title>
+                <Desc className="experience-desc">
                     My work experience as a software engineer and working on different companies and projects.
                 </Desc>
                 <TimelineSection>
                     <Timeline>
-                        {experiences.map((experience,index) => (
-                            <TimelineItem>
+                        {experiences.map((experience, index) => (
+                            <TimelineItem key={index} className="experience-item">
                                 <TimelineSeparator>
-                                    <TimelineDot variant="outlined" color="secondary" />
-                                    {index !== experiences.length - 1 && <TimelineConnector style={{ background: '#854CE6' }} />}
+                                    <StyledTimelineDot />
+                                    {index !== experiences.length - 1 && <StyledTimelineConnector />}
                                 </TimelineSeparator>
                                 <TimelineContent sx={{ py: '12px', px: 2 }}>
                                     <ExperienceCard experience={experience}/>
@@ -106,11 +146,9 @@ const Index = () => {
                             </TimelineItem>
                         ))}
                     </Timeline>
-
                 </TimelineSection>
             </Wrapper>
         </Container>
-        </div>
     )
 }
 

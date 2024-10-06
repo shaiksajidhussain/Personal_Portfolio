@@ -5,6 +5,7 @@ import { FaBars } from 'react-icons/fa';
 import { Bio } from '../../data/constants';
 import { Close, CloseRounded } from '@mui/icons-material';
 import { useTheme } from 'styled-components';
+import './../Animations.css'
 
 
 const Navbar = () => {
@@ -18,7 +19,8 @@ const Navbar = () => {
       <NavbarContainer>
         <NavLogo to='/'>
           <a style={{ display: "flex", alignItems: "center", color: "white", marginBottom: '20;', cursor: 'pointer' }}>
-            <DiCssdeck size="3rem" /> <Span>Portfolio</Span>
+            <DiCssdeck size="3rem" className="nav-icon" />
+             <Span>Portfolio</Span>
           </a>
         </NavLogo>
         <MobileIcon>
@@ -27,20 +29,23 @@ const Navbar = () => {
             setIsOpen(!isOpen)
           }} />
         </MobileIcon>
-        <NavItems>
- <NavLink onClick={scrollToTop}>About</NavLink>
-           <NavLink href='#skills'>Skills</NavLink>
-          <NavLink href='#experience'>Experience</NavLink>
-          <NavLink href='#projects'>Projects</NavLink>
-          <NavLink href='#education'>Education</NavLink>
-          <NavLink href='#contact'>Contact</NavLink>
+        <NavItems className='nav-items'>
+          {['About', 'Skills', 'Experience', 'Projects', 'Education', 'Contact'].map((item, index) => (
+            <NavLink key={item} href={`#${item.toLowerCase()}`} className="nav-item" style={{animationDelay: `${index * 0.1}s`}}>
+              {item}
+            </NavLink>
+          ))}
         </NavItems>
-        <ButtonContainer>
+        
+        <ButtonContainer className="nav-item" style={{animationDelay: '0.6s'}}>
           <GitHubButton href={Bio.github} target="_blank">Github Profile</GitHubButton>
         </ButtonContainer>
-        <ButtonContainer>
+        <ButtonContainer className="nav-item" style={{animationDelay: '0.7s'}}>
           <GitHubButton href={Bio.youtube} target="_blank">Youtube Profile</GitHubButton>
         </ButtonContainer>
+
+
+        
         {
           isOpen &&
           <MobileMenu isOpen={isOpen}>
@@ -67,6 +72,8 @@ const Navbar = () => {
         }
       </NavbarContainer>
     </Nav>
+
+    
   )
 }
 
