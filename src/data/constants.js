@@ -219,6 +219,83 @@ export const education = [
 export const projects = [
   {
     id: 0,
+    title: 'Dealsmocktails',
+    description: `Melody Mocktails Deal Platform
+
+As the lead front-end developer, I created a dynamic deals website for Melody Mocktails. Key features include:
+
+• Intuitive user interface with real-time deal updates
+• Responsive design for all devices
+• 'Grab a Deal' functionality with seamless purchase redirection
+• Full backend integration for robust functionality
+
+I leveraged modern web technologies to build an engaging platform that streamlines the customer journey from deal discovery to purchase. This project showcases my ability to deliver end-to-end web solutions that drive user engagement and support business growth in the beverage industry.`,
+    image: 'https://melodymocktail.blob.core.windows.net/website/mmAwsImagesBucket/c5dd2e37-3cda-4de8-97b5-be999214e974.png ',
+    tags: [ 'Next Js' , 'MongoDB', 'Jira' , 'BitBucket','Tailwind CSS','Figma'],
+    category: 'web app',
+    github: 'https://github.com/shaiksajidhussain/Uispark',
+    webapp: 'https://dev.dealsmocktail.com/',
+    member: [
+      {
+        name: 'Sajid Hussain',
+        img: 'https://avatars.githubusercontent.com/u/93574244?v=4',
+        linkedin: 'https://www.linkedin.com/in/shaiksajidhussain/',
+        github: 'https://github.com/shaiksajidhussain/'
+      },
+
+    ]
+  },
+  {
+    id: 0,
+    title: 'CTI Systems',
+    description: `CTI Systems
+
+As a contracted front-end developer for Melody Mocktails, I spearheaded the development of a bespoke website for a high-profile client. Key deliverables included:
+
+• Implementation of advanced CSS animations to enhance user engagement
+• Development of a responsive, cross-device compatible interface
+• Integration of an intuitive, custom-built contact form
+• Optimization of site performance and loading speeds
+• Seamless incorporation with the client's existing digital infrastructure
+
+This project showcased my proficiency in modern web technologies and my ability to translate client requirements into a polished, functional web presence. The resulting website not only met the client's specific needs but also reinforced Melody Mocktails' commitment to delivering high-quality digital solutions.`,
+    image: 'https://res.cloudinary.com/defsu5bfc/image/upload/v1728408124/Screenshot_2024-10-08_at_22.51.34_grualr.png ',
+    tags: [ 'Next Js' , 'MongoDB', 'Jira' , 'BitBucket','Tailwind CSS','Figma'],
+    category: 'web app',
+    github: 'https://github.com/shaiksajidhussain',
+    webapp: 'https://ctisystems-inc.com/',
+    member: [
+      {
+        name: 'Sajid Hussain',
+        img: 'https://avatars.githubusercontent.com/u/93574244?v=4',
+        linkedin: 'https://www.linkedin.com/in/shaiksajidhussain/',
+        github: 'https://github.com/shaiksajidhussain/'
+      },
+
+    ]
+  },
+  
+  {
+    id: 0,
+    title: 'UiSpark',
+    description: "UISpark - Ignite Your Web Design with Instant UI Magic! 🌟✨ UISpark is not just a UI library; it's your secret weapon for blazing-fast web development. Imagine having a treasure chest of pre-built, pixel-perfect components at your fingertips, ready to light up your projects with a simple copy and paste. Built with the holy trinity of web development - HTML, CSS, and JavaScript - and supercharged with the utility-first prowess of Tailwind CSS, UISpark components are like LEGO bricks for the digital age. Whether you're crafting a sleek dashboard, a vibrant e-commerce site, or a cutting-edge web app, UISpark has got you covered. No more wrestling with CSS or scratching your head over responsive designs. With UISpark, you're not just coding; you're composing a symphony of seamless user experiences. Each component is a spark of inspiration, meticulously crafted and ready to set your creativity ablaze.",
+    image: 'https://res.cloudinary.com/defsu5bfc/image/upload/v1728406562/Screenshot_2024-10-08_at_22.25.14_csbgfq.png ',
+    tags: ['Html', 'Css', ,'Tailwind CSS', 'Javascript', 'React Js', 'Express Js' , 'MongoDB', 'Libraries'],
+    category: 'web app',
+    github: 'https://github.com/shaiksajidhussain/Uispark',
+    webapp: 'https://uispark.vercel.app/',
+    member: [
+      {
+        name: 'Sajid Hussain',
+        img: 'https://avatars.githubusercontent.com/u/93574244?v=4',
+        linkedin: 'https://www.linkedin.com/in/shaiksajidhussain/',
+        github: 'https://github.com/shaiksajidhussain/'
+      },
+
+    ]
+  },
+  {
+    id: 0,
     title: 'QubicGen',
     description: "QubicGen - QubicGen is a service based company that offers a wide range of services like RPA , Web Development , SAP , CyberSecurity. I have Built there website by using React Js , Express Js , MongoDB , Tailwind, Figma  .",
     image: 'https://res.cloudinary.com/defsu5bfc/image/upload/v1714398402/Frame_115_tighuj.jpg',

@@ -72,6 +72,7 @@ const Image = styled.img`
     border-radius: 12px;
     margin-top: 30px;
     box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.3);
+    
 `;
 
 const Label = styled.div`
@@ -198,7 +199,7 @@ const index = ({ openModal, setOpenModal }) => {
                         }}
                         onClick={() => setOpenModal({ state: false, project: null })}
                     />
-                    <Image src={project?.image} />
+                    <Image src={project?.image} style={{width: '20%', height: '20%', objectFit: 'cover'}} />
                     <Title>{project?.title}</Title>
                     <Date>{project.date}</Date>
                     <Tags>

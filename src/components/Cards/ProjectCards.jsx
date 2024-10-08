@@ -122,13 +122,24 @@ const Avatar = styled.img`
     border: 3px solid ${({ theme }) => theme.card};
 `
 
-const ProjectCards = ({ project, setOpenModal }) => {
+const ProjectCards = ({project, setOpenModal}) => {
+    // Add this console.log to check what's being passed as setOpenModal
+    console.log('setOpenModal:', setOpenModal);
+
+    const handleClick = () => {
+        if (typeof setOpenModal === 'function') {
+            setOpenModal({state: true, project: project});
+        } else {
+            console.error('setOpenModal is not a function');
+        }
+    };
+
     return (
-        <Card onClick={() => setOpenModal({state: true, project: project})}>
+        <Card onClick={handleClick}>
             <Image src={project.image}/>
             <Tags>
                 {project.tags?.map((tag, index) => (
-                <Tag key={`${project.id}-tag-${index}`}>{tag}</Tag>
+                <Tag key={index}>{tag}</Tag>
                 ))}
             </Tags>
             <Details>
@@ -138,7 +149,7 @@ const ProjectCards = ({ project, setOpenModal }) => {
             </Details>
             <Members>
                 {project.member?.map((member, index) => (
-                    <Avatar key={`${project.id}-member-${index}`} src={member.img}/>
+                    <Avatar key={index} src={member.img}/>
                 ))}
             </Members>
             {/* <Button>View Project</Button> */}

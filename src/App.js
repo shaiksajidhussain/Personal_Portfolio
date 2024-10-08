@@ -16,6 +16,7 @@ import ProjectDetails from "./components/ProjectDetails";
 import styled from "styled-components";
 import ColorPicker from './components/ColorPicker';
 import CustomCursor from './components/Custom Cursor/Customcursor.jsx';
+
 const Body = styled.div`
   background-color: ${({ theme }) => theme.bg};
   width: 100%;
@@ -23,8 +24,15 @@ const Body = styled.div`
   position: relative;
 `
 
+const Wrapper = styled.div`
+  background: linear-gradient(38.73deg, rgba(204, 0, 187, 0.15) 0%, rgba(201, 32, 184, 0) 50%), linear-gradient(141.27deg, rgba(0, 70, 209, 0) 50%, rgba(0, 70, 209, 0.15) 100%);
+  width: 100%;
+  clip-path: polygon(0 0, 100% 0, 100% 100%,30% 98%, 0 100%);
+`
+
 function App() {
   const [theme, setTheme] = useState(darkTheme);
+  const [openModal, setOpenModal] = useState({ state: false, project: null });
 
   const changeTheme = (color) => {
     const newTheme = {...theme, primary: color};
@@ -38,13 +46,20 @@ function App() {
         <Navbar />
         <Body>
           <HeroSection />
-          <Skills />
-          <Experience />
-          <Projects />
-          <Education />
-          <Contact />
+          <Wrapper>
+            <Skills />
+            <Experience />
+          </Wrapper>
+          <Projects openModal={openModal} setOpenModal={setOpenModal} />
+          <Wrapper>
+            <Education />
+            <Contact />
+          </Wrapper>
           <Footer />
           <ColorPicker onChange={changeTheme} />
+          {openModal.state &&
+            <ProjectDetails openModal={openModal} setOpenModal={setOpenModal} />
+          }
         </Body>
       </Router>
     </ThemeProvider>
