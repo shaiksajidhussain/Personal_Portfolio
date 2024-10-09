@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { useRef } from 'react';
 import emailjs from '@emailjs/browser';
 
-import { Snackbar } from '@mui/material';
+import { Snackbar, Alert } from '@mui/material';
 import AOS from 'aos';
 import 'aos/dist/aos.css'; // Import CSS file
 
@@ -130,10 +130,25 @@ const Contact = () => {
 
   //hooks
   const [open, setOpen] = React.useState(false);
+  const [alertMessage, setAlertMessage] = React.useState('');
+  const [severity, setSeverity] = React.useState('success');
   const form = useRef();
 
   const sendEmail = (e) => {
     e.preventDefault();
+
+    // Form validation
+    const email = form.current.from_email.value;
+    const name = form.current.from_name.value;
+    const subject = form.current.subject.value;
+    const message = form.current.message.value;
+
+    if (!email || !name || !subject || !message) {
+      setAlertMessage('Please fill in all fields');
+      setSeverity('error');
+      setOpen(true);
+      return;
+    }
 
     emailjs
       .sendForm('service_m9m33cj', 'template_spp7619', form.current, {
@@ -141,9 +156,15 @@ const Contact = () => {
       })
       .then(
         () => {
-          console.log('SUCCESS!');
+          setAlertMessage('Email sent successfully!');
+          setSeverity('success');
+          setOpen(true);
+          form.current.reset(); // Clear the form after successful submission
         },
         (error) => {
+          setAlertMessage('Failed to send email. Please try again.');
+          setSeverity('error');
+          setOpen(true);
           console.log('FAILED...', error.text);
         },
       );
@@ -174,19 +195,22 @@ const Contact = () => {
         <Desc>Feel free to reach out to me for any questions or opportunities!</Desc>
         <ContactForm ref={form} onSubmit={sendEmail}>
           <ContactTitle>Email Me 🚀</ContactTitle>
-          <ContactInput placeholder="Your Email" name="from_email" />
-          <ContactInput placeholder="Your Name" name="from_name" />
-          <ContactInput placeholder="Subject" name="subject" />
-          <ContactInputMessage placeholder="Message" rows="4" name="message" />
+          <ContactInput placeholder="Your Email" name="from_email" type="email" required />
+          <ContactInput placeholder="Your Name" name="from_name" required />
+          <ContactInput placeholder="Subject" name="subject" required />
+          <ContactInputMessage placeholder="Message" rows="4" name="message" required />
           <ContactButton type="submit" value="Send" />
         </ContactForm>
         <Snackbar
           open={open}
           autoHideDuration={6000}
-          onClose={()=>setOpen(false)}
-          message="Email sent successfully!"
-          severity="success"
-        />
+          onClose={() => setOpen(false)}
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+        >
+          <Alert onClose={() => setOpen(false)} severity={severity} sx={{ width: '100%' }}>
+            {alertMessage}
+          </Alert>
+        </Snackbar>
       </Wrapper>
     </Container>
     </div>
