@@ -137,8 +137,8 @@ const Skills = () => {
     const handlePageView = async () => {
       if (!hasIncrementedRef.current) {
         try {
-          // const response = await fetch('http://localhost:5000/api/views/skills', {
-          const response = await fetch('https://portfolio-backend-six-ruby.vercel.app/api/views/skills', {
+          const response = await fetch('http://localhost:5000/api/views/skills', {
+          // const response = await fetch('https://portfolio-backend-six-ruby.vercel.app/api/views/skills', {
             method: 'POST'
           });
           const data = await response.json();

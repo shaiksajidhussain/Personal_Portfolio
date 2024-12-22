@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import { useRef } from 'react';
-import emailjs from '@emailjs/browser';
 import { Snackbar } from '@mui/material';
+
+// const API_URL = 'http://localhost:5000';
+const API_URL = 'https://portfolio-backend-six-ruby.vercel.app' ;
 
 const Container = styled.div`
   display: flex;
@@ -116,6 +117,21 @@ const ContactButton = styled.button`
   }
 `;
 
+const ViewCount = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  color: ${({ theme }) => theme.text_secondary};
+  margin-top: 5px;
+`;
+
+const ViewIcon = styled.div`
+  width: 20px;
+  height: 20px;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23808080"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>') center/contain no-repeat;
+`;
+
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -125,6 +141,38 @@ const Contact = () => {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [error, setError] = useState(false);
+  const [viewCount, setViewCount] = useState(0);
+  const hasIncrementedRef = useRef(false);
+
+  useEffect(() => {
+    fetchViewCount();
+    incrementViewCount();
+  }, []);
+
+  const fetchViewCount = async () => {
+    try {
+      const response = await fetch(`${API_URL}/api/views/contact`);
+      const data = await response.json();
+      setViewCount(data.count);
+    } catch (error) {
+      console.error('Error fetching view count:', error);
+    }
+  };
+
+  const incrementViewCount = async () => {
+    if (!hasIncrementedRef.current) {
+      try {
+        const response = await fetch(`${API_URL}/api/views/contact`, {
+          method: 'POST'
+        });
+        const data = await response.json();
+        setViewCount(data.count);
+        hasIncrementedRef.current = true;
+      } catch (error) {
+        console.error('Error incrementing view count:', error);
+      }
+    }
+  };
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -135,7 +183,7 @@ const Contact = () => {
     setLoading(true);
 
     try {
-      const response = await fetch('https://portfolio-backend-six-ruby.vercel.app/api/email/send', {
+      const response = await fetch(`${API_URL}/api/email/send`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -161,6 +209,9 @@ const Contact = () => {
     <Container>
       <Wrapper>
         <Title>Contact</Title>
+        <ViewCount>
+          <ViewIcon /> {viewCount} views
+        </ViewCount>
         <Desc>Feel free to reach out to me for any questions or opportunities!</Desc>
         <ContactForm onSubmit={handleSubmit}>
           <ContactInput

@@ -8,31 +8,48 @@ import AOS from 'aos';
 import 'aos/dist/aos.css'; // Import CSS file
 import { gsap } from 'gsap';
 
+// const API_URL = 'http://localhost:5000';
+const API_URL = 'https://portfolio-backend-six-ruby.vercel.app';
+
 const HeroSection = () => {
     const containerRef = useRef(null);
     const imageRef = useRef(null);
     const [viewCount, setViewCount] = useState(0);
+    const hasIncrementedRef = useRef(false);
 
     useEffect(() => {
         AOS.init();
         
-        const handlePageView = async () => {
+        const fetchViewCount = async () => {
             try {
-                // const response = await fetch('http://localhost:5000/api/views/hero', {
-                const response = await fetch('https://portfolio-backend-six-ruby.vercel.app/api/views/hero', {
-                    method: 'POST'
-                });
+                const response = await fetch(`${API_URL}/api/views/hero`);
                 const data = await response.json();
                 setViewCount(data.count);
             } catch (error) {
-                console.error('Error updating views:', error);
+                console.error('Error fetching view count:', error);
             }
         };
 
-        handlePageView();
+        const incrementViewCount = async () => {
+            if (!hasIncrementedRef.current) {
+                try {
+                    const response = await fetch(`${API_URL}/api/views/hero`, {
+                        method: 'POST'
+                    });
+                    const data = await response.json();
+                    setViewCount(data.count);
+                    hasIncrementedRef.current = true;
+                } catch (error) {
+                    console.error('Error incrementing view count:', error);
+                }
+            }
+        };
+
+        fetchViewCount();
+        incrementViewCount();
 
         // Add event listener for page visibility
-        document.addEventListener('visibilitychange', handlePageView);
+        document.addEventListener('visibilitychange', incrementViewCount);
         
         // Mouse move effect code
         const container = containerRef.current;
@@ -61,7 +78,7 @@ const HeroSection = () => {
         container.addEventListener('mousemove', handleMouseMove);
 
         return () => {
-            document.removeEventListener('visibilitychange', handlePageView);
+            document.removeEventListener('visibilitychange', incrementViewCount);
             container.removeEventListener('mousemove', handleMouseMove);
         };
     }, []);
