@@ -1,5 +1,4 @@
-import React from 'react'
-import { useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { Container, Wrapper, Title, Desc, CardContainer, ToggleButtonGroup, ToggleButton, Divider } from './ProjectsStyle'
 import ProjectCard from '../Cards/ProjectCards'
 import { projects } from '../../data/constants'
@@ -9,14 +8,47 @@ import 'aos/dist/aos.css'; // Import CSS file
 
 const Projects = ({openModal,setOpenModal}) => {
   const [toggle, setToggle] = useState('all');
-  React.useEffect(() => {
+  const [viewCount, setViewCount] = useState(0);
+  const hasIncrementedRef = useRef(false);
+
+  useEffect(() => {
     AOS.init();
+    
+    const handlePageView = async () => {
+      if (!hasIncrementedRef.current) {
+        try {
+          // const response = await fetch('http://localhost:5000/api/views/projects', {
+          const response = await fetch('https://portfolio-backend-six-ruby.vercel.app/api/views/projects', {
+            method: 'POST'
+          });
+          const data = await response.json();
+          setViewCount(data.count);
+          hasIncrementedRef.current = true;
+        } catch (error) {
+          console.error('Error updating views:', error);
+        }
+      }
+    };
+
+    handlePageView();
+
+    // Add event listener for page visibility
+    document.addEventListener('visibilitychange', () => {
+      if (!hasIncrementedRef.current) {
+        handlePageView();
+      }
+    });
+    
+    return () => {
+      document.removeEventListener('visibilitychange', handlePageView);
+    };
   }, []);
   
   return (
     <Container id="projects" data-aos="zoom-in-right" data-aos-duration="1500" >
       <Wrapper>
         <Title>Projects</Title>
+        <small style={{ color: '#858584' }}>Page Views: {viewCount}</small>
         <Desc>
           I have worked on a wide range of projects. From web apps to android apps. Here are some of my projects.
         </Desc>

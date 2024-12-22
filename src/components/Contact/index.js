@@ -1,6 +1,5 @@
-import React from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { useRef } from 'react';
 import emailjs from '@emailjs/browser';
 
 import { Snackbar, Alert } from '@mui/material';
@@ -133,6 +132,10 @@ const Contact = () => {
   const [alertMessage, setAlertMessage] = React.useState('');
   const [severity, setSeverity] = React.useState('success');
   const form = useRef();
+  const hasIncrementedRef = useRef(false);
+  const [viewCount, setViewCount] = useState(() => {
+    return parseInt(localStorage.getItem('contactViews') || '0');
+  });
 
   const sendEmail = (e) => {
     e.preventDefault();
@@ -172,8 +175,17 @@ const Contact = () => {
   
   
   
-  React.useEffect(() => {
+  useEffect(() => {
     AOS.init();
+    
+    // Only increment if we haven't done so already
+    if (!hasIncrementedRef.current) {
+      const currentViews = parseInt(localStorage.getItem('contactViews') || '0');
+      const newViews = currentViews + 1;
+      localStorage.setItem('contactViews', newViews.toString());
+      setViewCount(newViews);
+      hasIncrementedRef.current = true;
+    }
   }, []);
   
 
@@ -192,6 +204,7 @@ const Contact = () => {
 <Container data-aos="zoom-in-left" data-aos-duration="1500"  >
       <Wrapper>
         <Title>Contact</Title>
+        <small style={{ color: '#858584' }}>Page Views: {viewCount}</small>
         <Desc>Feel free to reach out to me for any questions or opportunities!</Desc>
         <ContactForm ref={form} onSubmit={sendEmail}>
           <ContactTitle>Email Me 🚀</ContactTitle>

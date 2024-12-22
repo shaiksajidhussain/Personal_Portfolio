@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { skills } from '../../data/constants'
 import gsap from 'gsap'
@@ -125,9 +125,44 @@ const SkillImage = styled.img`
 `
 
 const Skills = () => {
+  const [viewCount, setViewCount] = useState(0);
+  const hasIncrementedRef = useRef(false);
   const skillsRef = useRef(null)
   const skillCardsRef = useRef([])
   const skillItemsRef = useRef([])
+
+  useEffect(() => {
+    AOS.init();
+    
+    const handlePageView = async () => {
+      if (!hasIncrementedRef.current) {
+        try {
+          // const response = await fetch('http://localhost:5000/api/views/skills', {
+          const response = await fetch('https://portfolio-backend-six-ruby.vercel.app/api/views/skills', {
+            method: 'POST'
+          });
+          const data = await response.json();
+          setViewCount(data.count);
+          hasIncrementedRef.current = true;
+        } catch (error) {
+          console.error('Error updating views:', error);
+        }
+      }
+    };
+
+    handlePageView();
+
+    // Add event listener for page visibility
+    document.addEventListener('visibilitychange', () => {
+      if (!hasIncrementedRef.current) {
+        handlePageView();
+      }
+    });
+    
+    return () => {
+      document.removeEventListener('visibilitychange', handlePageView);
+    };
+  }, []);
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger)
@@ -215,6 +250,7 @@ const Skills = () => {
     <Container id="skills" ref={skillsRef}>
       <Wrapper>
         <Title className="skills-title">Skills</Title>
+        <small style={{ color: '#858584' }}>Page Views: {viewCount}</small>
         <Desc className="skills-desc">Heree are some of my skills on which I have been working on for the past 2 years.</Desc>
         <SkillsContainer>
           {skills.map((skill, index) => (

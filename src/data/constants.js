@@ -219,6 +219,35 @@ export const education = [
 export const projects = [
   {
     id: 0,
+    title: 'Imagifine',
+    description: `Imagifine
+
+A cutting-edge SaaS application that harnesses the power of AI to transform text prompts into stunning, realistic images. Key features include:
+
+• Advanced AI image generation from natural language prompts
+• Integration with Google's Gemini API for intelligent Q&A capabilities
+• Seamless Razorpay payment integration for purchasing additional credits
+• User-friendly interface for prompt creation and image customization
+• Responsive design that works flawlessly across all devices
+
+I leveraged modern web technologies to build this comprehensive AI platform that enables users to easily create AI-generated artwork and get answers to their questions through natural conversation. The integration of Razorpay provides a smooth payment experience for users looking to expand their creative capabilities with more credits.`,
+    image: 'https://res.cloudinary.com/defsu5bfc/image/upload/v1733066567/cutter-removebg-preview_j7qcny.png ',
+    tags: [ 'Next Js' ,'Razorpay', 'Gemini', 'MongoDB', 'Jira' , 'BitBucket','Tailwind CSS','Figma'],
+    category: 'web app',
+    github: 'https://github.com/shaiksajidhussain',
+    webapp: 'https://imagifine.vercel.app/',
+    member: [
+      {
+        name: 'Sajid Hussain',
+        img: 'https://avatars.githubusercontent.com/u/93574244?v=4',
+        linkedin: 'https://www.linkedin.com/in/shaiksajidhussain/',
+        github: 'https://github.com/shaiksajidhussain/'
+      },
+
+    ]
+  },
+  {
+    id: 0,
     title: 'Dealsmocktails',
     description: `Melody Mocktails Deal Platform
 
