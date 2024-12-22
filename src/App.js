@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { ThemeProvider } from 'styled-components';
 import { darkTheme, lightTheme } from './utils/Themes.js';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from "./components/Navbar";
 import './App.css';
 import './index.css';
-import { BrowserRouter as Router } from 'react-router-dom';
 import HeroSection from "./components/HeroSection";
 import Skills from "./components/Skills";
 import Projects from "./components/Projects";
@@ -16,6 +16,9 @@ import ProjectDetails from "./components/ProjectDetails";
 import styled from "styled-components";
 import ColorPicker from './components/ColorPicker';
 import CustomCursor from './components/Custom Cursor/Customcursor.jsx';
+import AdminLogin from './components/Admin/AdminLogin';
+import AdminDashboard from './components/Admin/AdminDashboard';
+import Testimonials from './components/Testimonials';
 
 const Body = styled.div`
   background-color: ${({ theme }) => theme.bg};
@@ -42,25 +45,32 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <Router>
-        <CustomCursor />
-        <Navbar />
-        <Body>
-          <HeroSection />
-          <Wrapper>
-            <Skills />
-            <Experience />
-          </Wrapper>
-          <Projects openModal={openModal} setOpenModal={setOpenModal} />
-          <Wrapper>
-            <Education />
-            <Contact />
-          </Wrapper>
-          <Footer />
-          <ColorPicker onChange={changeTheme} />
-          {openModal.state &&
-            <ProjectDetails openModal={openModal} setOpenModal={setOpenModal} />
-          }
-        </Body>
+        <Routes>
+          <Route path="/admin/login" element={<AdminLogin />} />
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          <Route path="/" element={
+            <Body>
+              <CustomCursor />
+              <Navbar />
+              <HeroSection />
+              <Wrapper>
+                <Skills />
+                <Experience />
+              </Wrapper>
+              <Projects openModal={openModal} setOpenModal={setOpenModal} />
+              <Testimonials />
+              <Wrapper>
+                <Education />
+                <Contact />
+              </Wrapper>
+              <Footer />
+              <ColorPicker onChange={changeTheme} />
+              {openModal.state &&
+                <ProjectDetails openModal={openModal} setOpenModal={setOpenModal} />
+              }
+            </Body>
+          } />
+        </Routes>
       </Router>
     </ThemeProvider>
   );
